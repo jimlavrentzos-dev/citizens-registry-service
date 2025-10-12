@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.example</groupId>
+	<artifactId>citizenregistry</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.3</version>
+	</parent>
+	<packaging>pom</packaging>
+	<name>citizenregistry</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+	<maven-compiler.version>3.11.0</maven-compiler.version>
+	<maven-exec>1.2.1</maven-exec>
+	<assembly-version>3.7.1</assembly-version>
+	<surefire.version></surefire.version>
+		<java.version>21</java.version>
+	</properties>
+	<modules>
+	<module>citizen-client</module>
+	<module>citizen-domain</module>
+	<module>citizen-service</module>
+	</modules>
+	<dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>citizen-service</artifactId>
+			<version>${project.version}</version>>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.ibm.db2</groupId>
+			<artifactId>jcc</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.CitizensDev.Citizens2</groupId>
+			<artifactId>Citizens</artifactId>
+			<version>1.21.7</version>
+		</dependency>
+	</dependencies>
+	</dependencyManagement>
+	
+	<pluginRepositories>
+	<pluginRepository>
+	<id>central</id>
+	<name>Central Repository</name>
+	<url>https://repo.maven.apache.org/maven2</url>
+	<layout>default</layout>
+	<snapshots>
+	<enabled>false</enabled>
+	</snapshots>
+	<releases>
+	<updatePolicy>never</updatePolicy>
+	</releases>
+	</pluginRepository>
+	</pluginRepositories>
+	
+	<repositories>
+	<repository>
+	<id>central</id>
+	<name>Central Repository</name>
+	<url>https://repo.maven.apache.org/maven2</url>
+	<layout>default</layout>
+	<snapshots>
+	<enabled>false</enabled>
+	</snapshots>
+	</repository>
+	</repositories>
+
+	<build>
+	<pluginManagement>
+		<plugins>
+			<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-citizen-plugin</artifactId>
+	        <version>1.0.0</version>
+	    </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+                <execution>
+                <id>run-app</id>
+                <phase>package</phase>
+                <goals>
+                <goal>java</goal>
+                </goals>
+                </execution>
+                </executions>
+                <configuration>
+                <mainClass>citizen-service.src.main.java.com.example.service.CitizenService</mainClass>
+                <includePluginDependencies>true</includePluginDependencies>
+                </configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler.version}</version>n>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${maven-exec}</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${assembly-version}</version>
+			</plugin>
+			<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${failsafe.version}</version>
+            </plugin>
+			<plugin>
+			<groupId>maven-surefire-plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>${surefire.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

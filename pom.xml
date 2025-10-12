@@ -124,11 +124,6 @@
 	<pluginManagement>
 		<plugins>
 			<plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-citizen-plugin</artifactId>
-	        <version>1.0.0</version>
-	    </plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
@@ -155,11 +150,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler.version}</version>n>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>${maven-exec}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

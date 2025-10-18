@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: citizen-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secure_password
+      MYSQL_DATABASE: citizen_registry_db
+      MYSQL_USER: registry_user
+      MYSQL_PASSWORD: secure_password
+
+    volumes:
+      - citizen-db-data:/var/lib/mysql 
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      
+    networks:
+      - citizen-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+    restart: unless-stopped
+
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    container_name: citizen-api
+    restart: unless-stopped
+    depends_on:
+     mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/citizen_registry_db
+      SPRING_DATASOURCE_USERNAME: registry_user
+      SPRING_DATASOURCE_PASSWORD: secure_password
+    ports:
+      - "8080:8080"
+    networks:
+      - citizen-net
+     restart: on-failure
+    read_only: true
+    tmpfs:
+      - /tmp
+      
+volumes:
+  citizen-db-data:
+  
+networks:
+  citizen-net:
+    driver: bridge

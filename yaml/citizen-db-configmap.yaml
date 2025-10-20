@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-config
+  namespace: citizens
+data:
+  setup.sql: |
+    
+    CREATE DATABASE IF NOT EXISTS citizen_registry_db;
+
+    CREATE USER 'registry_user'@'%' IDENTIFIED BY 'secure_password';
+
+    GRANT ALL PRIVILEGES ON citizen_registry_db.* TO 'registry_user'@'%';
+
+    FLUSH PRIVILEGES;

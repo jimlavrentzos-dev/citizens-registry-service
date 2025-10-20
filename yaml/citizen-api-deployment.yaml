@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citizen-api-deployment
+  namespace: citizens
+  labels:
+    app: citizen-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: citizen-api
+  template:
+    metadata:
+      labels:
+        app: citizen-api
+    spec:
+      containers:
+        - name: citizen-api
+          image: citizen-registry-service:latest 
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://citizen-db:3306/citizen_registry_db
+            - name: SPRING_DATASOURCE_USERNAME
+              value: registry_user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: citizen-db-secret
+                  key: mysql-password
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 3
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          securityContext:
+            runAsUser: 10001
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+
